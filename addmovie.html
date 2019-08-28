@@ -1,0 +1,133 @@
+<html>
+    <head>
+        <style>
+        .multiselect {
+  width: 200px;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+#checkboxes2 {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes2 label {
+  display: block;
+}
+
+#checkboxes2 label:hover {
+  background-color: #1e90ff;
+  
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+
+}</style>
+    </head>
+    <body>
+        
+        <form action="actionpage.php" method="post" enctype="multipart/form-data">
+            Name:<br>
+            <input type="text" name="name" required><br><br>
+            Actors:<br>
+            <div class="multiselect">
+                    <div class="selectBox" onclick="showCheckboxes()">
+                      <select>
+                        <option>Select Actors</option>
+                      </select>
+                      <div class="overSelect"></div>
+                    </div>
+                    <div id="checkboxes">
+                      <label for="one">
+                        <input type="checkbox" name="actor"/>Di Caprio</label>
+                      <label for="two">
+                        <input type="checkbox" name="actor"/>Marilyn Monroe</label>
+                      <label for="three">
+                        <input type="checkbox" name= "actor"/>Tom Hanks</label>
+                    </div>
+                  </div>
+            <br>
+            <br>
+            Rating:<br>
+            <input type="number" name="rating" min="1" max="10" required> <br>
+            <br>
+            Year of Release:<br>
+            <input type="year" name="yearofrelease" required><br>
+            <br>
+            Genre:<br>
+            
+            <div class="multiselect">
+                    <div class="selectBox" onclick="showCheckboxes2()">
+                      <select>
+                        <option>Select Genre</option>
+                      </select>
+                      <div class="overSelect"></div>
+                    </div>
+                    <div id="checkboxes2">
+                      <label for="one">
+                        <input type="checkbox" name="genre"/>Drama</label>
+                      <label for="two">
+                        <input type="checkbox" name="genre"/>Romance</label>
+                      <label for="three">
+                        <input type="checkbox" name="genre"/>Action</label>
+                    </div>
+                  </div>
+            <br>
+            Thumbnail:<br>
+            <input type="file" name="thumbnail">
+            <br>
+            
+            <br>
+            <input type="file" value="Submit">
+          </form>
+        <script>
+        var expanded = false;
+
+function showCheckboxes() {
+  var checkboxes = document.getElementById("checkboxes");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
+function showCheckboxes2() {
+  var checkboxes = document.getElementById("checkboxes2");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
+        </script>
+    </body>
+</html>
