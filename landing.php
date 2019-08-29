@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    
+
     <script>
         $(document).ready(function() {
             $("button#submit").click(function() {
@@ -47,9 +47,6 @@
             });
         });
     </script>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css"> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script> -->
     <style type="text/css">
         .wrapper {
             width: 650px;
@@ -128,6 +125,7 @@
                     require_once "config.php";
 
                     // Attempt select query execution
+
                     $sql = "SELECT * FROM movies";
                     if ($result = $mysqli->query($sql)) {
                         if ($result->num_rows > 0) {
@@ -148,13 +146,55 @@
                                 echo "<tr>";
                                 //echo "<td>" . $row['id'] . "</td>";
                                 echo "<td>" . $row['name'] . "</td>";
-                                echo "<td>" . $row['actor'] . "</td>";
+                                $name = $row['name'];
+
+
+
+                                //something gonna happen here
+                                echo "<td>";
+                                $sql1 = "SELECT actor FROM actorsforamovie WHERE movie= '$name' ";
+
+                                if ($result1 = $mysqli->query($sql1)) {
+
+
+                                    if ($result1->num_rows > 0) {
+                                        while ($row1 = $result1->fetch_array()) {
+                                            echo $row1['actor'];
+                                            echo "<br>";
+                                        }
+
+                                        // Free result set
+                                        $result1->free();
+                                    }
+                                }
+
+                                echo "</td>";
+
+
                                 echo "<td>" . $row['year'] . "</td>";
 
-                                echo "<td>" . $row['genre'] . "</td>";
+                                //something gonna happen here2
+                                echo "<td>";
+                                $sql2 = "SELECT actor FROM genresforamovie WHERE movie= '$name' ";
+
+                                if ($result2 = $mysqli->query($sql2)) {
+
+
+                                    if ($result2->num_rows > 0) {
+                                        while ($row2 = $result2->fetch_array()) {
+                                            echo $row2['genre'];
+                                            echo "<br>";
+                                        }
+
+                                        // Free result set
+                                        $result2->free();
+                                    }
+                                }
+
+                                echo "</td>";
                                 echo "<td>" . $row['rating'] . "</td>";
 
-                                echo "<td><img src=\"" .$row['thumbnail']. "\" width=\"100px\"/></td>";
+                                echo "<td><img src=\"" . $row['thumbnail'] . "\" width=\"100px\"/></td>";
                                 echo "<td>";
 
                                 echo "<a href='update.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
@@ -172,6 +212,8 @@
                     } else {
                         echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
                     }
+
+
 
                     // Close connection
                     $mysqli->close();

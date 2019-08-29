@@ -36,7 +36,7 @@ $genredrop = $mysqli->query("SELECT genre FROM genretable");
                         </div>
                         <div class="form-group  ">
                             <label>Actor</label>
-                            <select name="actor">
+                            <select name="actor[]" multiple>
                                 <?php
                                 while($rows= $actordrop->fetch_assoc()){
                                 $actor = $rows['actor'];
@@ -60,7 +60,7 @@ $genredrop = $mysqli->query("SELECT genre FROM genretable");
                         </div>
                         <div class="form-group  ">
                             <label>Genre</label>
-                            <select name="genre">
+                            <select name="genre[]" multiple>
                                 <?php
                                 while($rows= $genredrop->fetch_assoc()){
                                 $genre = $rows['genre'];
