@@ -14,11 +14,14 @@ $actor = $mysqli->real_escape_string($_REQUEST['actor']);
 $rating = $mysqli->real_escape_string($_REQUEST['rating']);
 $yearofrelease = $mysqli->real_escape_string($_REQUEST['yearofrelease']);
 $genre = $mysqli->real_escape_string($_REQUEST['genre']);
+$thumbnail= $_POST['thumbnail'];
 // Attempt insert query execution
-$sql = "INSERT INTO movies (name, actor, rating, year, genre ) VALUES ('$name', '$actor', '$rating', '$yearofrelease', '$genre')";
+$sql = "INSERT INTO movies (name, actor, rating, year, genre, thumbnail ) VALUES ('$name', '$actor', '$rating', '$yearofrelease', '$genre', '$thumbnail')";
 if($mysqli->query($sql) === true){
     echo "Records inserted successfully.";
 } else{
     echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
 }
+echo "<br>";
+echo "<a href='landing.php' class='btn btn-default'>HomePage</a>";
 ?>

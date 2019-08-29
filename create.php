@@ -1,3 +1,11 @@
+<?php
+// Include config file
+require_once "config.php";
+//$id = $_GET['id'];
+$actordrop = $mysqli->query("SELECT actor FROM actortable");
+$genredrop = $mysqli->query("SELECT genre FROM genretable");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +13,8 @@
     <meta charset="UTF-8">
     <title>Create Record</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
+   
+   <style type="text/css">
         .wrapper {
             width: 500px;
             margin: 0 auto;
@@ -27,7 +36,16 @@
                         </div>
                         <div class="form-group  ">
                             <label>Actor</label>
-                            <input type="text" name="actor" class="form-control" required>
+                            <select name="actor">
+                                <?php
+                                while($rows= $actordrop->fetch_assoc()){
+                                $actor = $rows['actor'];
+                                echo "<option value='$actor'>$actor</option>";
+                                
+                                }
+                                ?>
+                            </select>
+                            <!-- <input type="text" name="actor" class="form-control" required> -->
 
                         </div>
                         <div class="form-group  ">
@@ -42,12 +60,20 @@
                         </div>
                         <div class="form-group  ">
                             <label>Genre</label>
-                            <input type="text" name="genre" class="form-control" required>
+                            <select name="genre">
+                                <?php
+                                while($rows= $genredrop->fetch_assoc()){
+                                $genre = $rows['genre'];
+                                echo "<option value='$genre'>$genre</option>";
+                                
+                                }
+                                ?>
+                            </select>
 
                         </div>
                         <div class="form-group  ">
-                            <label>Thumbnail</label>
-                            <input type="file" name="thumbnail" class="form-control">
+                            <label>Thumbnail URL</label>
+                            <input type="url" name="thumbnail" class="form-control" value="https://picsum.photos/200" required>
 
                         </div>
 
