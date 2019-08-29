@@ -13,8 +13,8 @@ $genredrop = $mysqli->query("SELECT genre FROM genretable");
     <meta charset="UTF-8">
     <title>Create Record</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-   
-   <style type="text/css">
+
+    <style type="text/css">
         .wrapper {
             width: 500px;
             margin: 0 auto;
@@ -30,22 +30,21 @@ $genredrop = $mysqli->query("SELECT genre FROM genretable");
                 <div class="col-md-12">
                     <form action="actionpage.php" method="post" enctype="multipart/form-data">
                         <br>
+                        <input type="hidden" name="id" class="form-control" value="<?php echo uniqid(); ?>" >
                         <div class="form-group ">
                             <label>Name</label>
                             <input type="text" name="name" class="form-control" required>
                         </div>
                         <div class="form-group  ">
                             <label>Actor</label>
-                            <select name="actor[]" multiple>
+                            <select name="actor[]" multiple required>
                                 <?php
-                                while($rows= $actordrop->fetch_assoc()){
-                                $actor = $rows['actor'];
-                                echo "<option value='$actor'>$actor</option>";
-                                
+                                while ($rows = $actordrop->fetch_assoc()) {
+                                    $actor = $rows['actor'];
+                                    echo "<option value='$actor'>$actor</option>";
                                 }
                                 ?>
                             </select>
-                            <!-- <input type="text" name="actor" class="form-control" required> -->
 
                         </div>
                         <div class="form-group  ">
@@ -60,12 +59,11 @@ $genredrop = $mysqli->query("SELECT genre FROM genretable");
                         </div>
                         <div class="form-group  ">
                             <label>Genre</label>
-                            <select name="genre[]" multiple>
+                            <select name="genre[]" multiple required>
                                 <?php
-                                while($rows= $genredrop->fetch_assoc()){
-                                $genre = $rows['genre'];
-                                echo "<option value='$genre'>$genre</option>";
-                                
+                                while ($rows = $genredrop->fetch_assoc()) {
+                                    $genre = $rows['genre'];
+                                    echo "<option value='$genre'>$genre</option>";
                                 }
                                 ?>
                             </select>

@@ -15,10 +15,11 @@ $rating = $mysqli->real_escape_string($_REQUEST['rating']);
 $yearofrelease = $mysqli->real_escape_string($_REQUEST['yearofrelease']);
 //$genre = $mysqli->real_escape_string($_REQUEST['genre']);
 $thumbnail= $_POST['thumbnail'];
+$id= $_POST['id'];
 // Attempt insert query execution
 foreach ($_POST['actor'] as $selectedactor) {
     
-    $sql = "INSERT INTO actorsforamovie (movie, actor ) VALUES ('$name', '$selectedactor')";
+    $sql = "INSERT INTO actorsforamovie (id, movie, actor, year, rating ) VALUES ('$id', '$name', '$selectedactor', '$yearofrelease', '$rating')";
 if($mysqli->query($sql) === true){
     echo "Records inserted successfully.";
 } else{
@@ -27,14 +28,14 @@ if($mysqli->query($sql) === true){
 }
 foreach ($_POST['genre'] as $selectedgenre) {
     
-    $sql = "INSERT INTO genresforamovie (movie, genre ) VALUES ('$name', '$selectedgenre')";
+    $sql = "INSERT INTO genresforamovie (id, movie, genre, year, rating ) VALUES ('$id','$name', '$selectedgenre', '$yearofrelease', '$rating')";
 if($mysqli->query($sql) === true){
     echo "Records inserted successfully.";
 } else{
     echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
 }
 }
-$sql = "INSERT INTO movies (name, rating, year, thumbnail ) VALUES ('$name', '$rating', '$yearofrelease', '$thumbnail')";
+$sql = "INSERT INTO movies (id, name, rating, year, thumbnail ) VALUES ('$id','$name', '$rating', '$yearofrelease', '$thumbnail')";
 if($mysqli->query($sql) === true){
     echo "Records inserted successfully.";
 } else{

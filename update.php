@@ -6,17 +6,19 @@ $actordrop = $mysqli->query("SELECT actor FROM actortable");
 $genredrop = $mysqli->query("SELECT genre FROM genretable");
 
 //Attempt select query execution
-$sql = "SELECT * FROM movies WHERE id= $id ";
+$sql = "SELECT * FROM movies WHERE id= '$id' ";
 if ($result = $mysqli->query($sql)) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_array()) {
 
             $id= $row['id'];
+            
             $name= $row['name'];
-            $actor= $row['actor'];
+            
+            //$actor= $row['actor'];
             $year= $row['year'];
             $rating= $row['rating'];
-            $genre= $row['genre'];
+            //$genre= $row['genre'];
             $thumbnail= $row['thumbnail'];
         }
 
@@ -50,6 +52,7 @@ if ($result = $mysqli->query($sql)) {
                     <form action="updateaction.php" method="post" enctype="multipart/form-data">
                         <br>
                         <input type="hidden" name="id" class="form-control" value="<?php echo $id; ?>" >
+            
                         <div class="form-group ">
                             <label>Name</label>
                             <input type="text" name="name" class="form-control" value="<?php echo $name; ?>" required>
@@ -57,16 +60,14 @@ if ($result = $mysqli->query($sql)) {
                         
                         <div class="form-group  ">
                             <label>Actor</label>
-                            <select name="actor" value="<?php echo $actor; ?>" required>
+                            <select name="actor[]" multiple required>
                                 <?php
-                                while($rows= $actordrop->fetch_assoc()){
-                                $actor = $rows['actor'];
-                                echo "<option value='$actor'>$actor</option>";
-                                
+                                while ($rows = $actordrop->fetch_assoc()) {
+                                    $actor = $rows['actor'];
+                                    echo "<option value='$actor'>$actor</option>";
                                 }
                                 ?>
                             </select>
-                            <!-- <input type="text" name="actor" class="form-control" required> -->
 
                         </div>
                         <div class="form-group  ">
@@ -82,15 +83,16 @@ if ($result = $mysqli->query($sql)) {
       
                         <div class="form-group  ">
                             <label>Genre</label>
-                            <select name="genre" value="<?php echo $genre; ?>" required>
+                            <select name="genre[]" multiple required>
                                 <?php
-                                while($rows= $genredrop->fetch_assoc()){
-                                $genre = $rows['genre'];
-                                echo "<option value='$genre'>$genre</option>";
-                                
+                                while ($rows = $genredrop->fetch_assoc()) {
+                                    $genre = $rows['genre'];
+                                    echo "<option value='$genre'>$genre</option>";
                                 }
                                 ?>
                             </select>
+
+                        </div>
                         
                         <div class="form-group  ">
                             <label>Thumbnail URL</label>

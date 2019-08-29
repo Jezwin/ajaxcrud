@@ -8,8 +8,48 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+    <script type="text/javascript" src="/bootboxmin.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.deleterecord').click(function(e) {
+                e.preventDefault();
+                var id = $(this).attr('id');
+                //alert(id);
+                var parent = $(this).parent("td").parent("tr");
+                bootbox.dialog({
+                    message: "Are you sure you want to Delete ?",
+                    //title: "<i class='glyphicon glyphicon-trash'></i> Delete !",
+                    buttons: {
+                        success: {
+                            label: "No",
+                            className: "btn-success",
+                            callback: function() {
+                                $('.bootbox').modal('hide');
+                            }
+                        },
+                        danger: {
+                            label: "Delete!",
+                            className: "btn-danger",
+                            callback: function() {
+                                $.ajax({
+                                        type: 'post',
+                                        url: 'delete.php',
+                                        data: 'id=' + id
+                                    })
+                                    .done(function(response) {
+                                        //bootbox.alert(response);
+                                        parent.fadeOut('slow');
+                                    })
+                                    .fail(function() {
+                                        bootbox.alert('Error....');
+                                    })
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
         $(document).ready(function() {
             $("button#submit").click(function() {
                 $.ajax({
@@ -46,6 +86,11 @@
                 });
             });
         });
+
+
+
+
+        
     </script>
     <style type="text/css">
         .wrapper {
@@ -86,7 +131,7 @@
                                         <form class="feedback" name="feedback">
                                             <strong>Name</strong>
                                             <br />
-                                            <input type="text" name="name" class="input-xlarge">
+                                            <input type="text" name="name" value="" class="input-xlarge">
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -108,7 +153,7 @@
                                         <form class="feedback1" name="feedback">
                                             <strong>Genre</strong>
                                             <br />
-                                            <input type="text" name="name" class="input-xlarge">
+                                            <input type="text" name="name" value="" class="input-xlarge">
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -118,6 +163,7 @@
                                 </div>
                             </div>
                         </div>
+                       
                         <a href="create.php" class="btn btn-success pull-right">Add Movie</a>
                     </div>
                     <?php
@@ -147,12 +193,15 @@
                                 //echo "<td>" . $row['id'] . "</td>";
                                 echo "<td>" . $row['name'] . "</td>";
                                 $name = $row['name'];
+                                $year = $row['year'];
+                                $rating = $row['rating'];
+                                $id = $row['id'];
 
 
 
                                 //something gonna happen here
                                 echo "<td>";
-                                $sql1 = "SELECT actor FROM actorsforamovie WHERE movie= '$name' ";
+                                $sql1 = "SELECT actor FROM actorsforamovie WHERE movie= '$name' AND year='$year' AND rating='$rating' AND id='$id' ";
 
                                 if ($result1 = $mysqli->query($sql1)) {
 
@@ -175,7 +224,8 @@
 
                                 //something gonna happen here2
                                 echo "<td>";
-                                $sql2 = "SELECT actor FROM genresforamovie WHERE movie= '$name' ";
+                                $sql2 = "SELECT genre FROM genresforamovie WHERE movie= '$name' AND year='$year' AND rating='$rating' AND id='$id' ";
+                                //echo $sql2;
 
                                 if ($result2 = $mysqli->query($sql2)) {
 
@@ -198,7 +248,10 @@
                                 echo "<td>";
 
                                 echo "<a href='update.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                echo "<a href='delete.php?id=" . $row['id'] . "' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                //echo "<a href='#feedback-modal2' id='feedback2' data-toggle= 'modal' title='Delete Record' ><span class='glyphicon glyphicon-trash'></span></a>";
+                                $id = $row['id'];
+                                echo "<a id='$id' href='#' title='Delete Record' class='deleterecord'><span class='glyphicon glyphicon-trash'></span></a>";
+                                //  <button id="feedback1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedback-modal1">Add Genre</button>
                                 echo "</td>";
                                 echo "</tr>";
                             }
