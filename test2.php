@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/bootboxmin.js"></script>
+    <script type="text/javascript" src="/tableedit.js"></script>
     <script>
         $(document).ready(function() {
             $('.delete_employee').click(function(e) {
@@ -72,10 +73,15 @@
                         echo " <td>";
 
                         $id = $row['id'];
-                        echo $id;
-
+                        
                         echo "<a id='$id' href='#' title='Delete Record' class='delete_employee'><span class='glyphicon glyphicon-trash'></span></a>";
                         echo "</td>";
+                        echo " <td>";
+                        
+                        echo "<a id='$id' href='#' title='Update Record' class='update'><span class='glyphicon glyphicon-pencil'></span></a>";
+                        echo "</td>";
+                        
+
                         echo "</tr>";
                     }
 

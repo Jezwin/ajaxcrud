@@ -10,6 +10,68 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/bootboxmin.js"></script>
     <script>
+        //Edit Option
+
+        $(document).ready(function() {
+            $(".editorbox").hide();
+            $(".text").show();
+            $(".edit_tr").click(function() {
+                var ID = $(this).attr('id');
+
+                $("#name_" + ID).hide();
+                $("#nameedit_" + ID).show();
+                $("#year_" + ID).hide();
+                $("#yearedit_" + ID).show();
+                $("#rating_" + ID).hide();
+                $("#ratingedit_" + ID).show();
+
+            }).change(function() {
+                var ID = $(this).attr('id');
+                var name = $("#nameedit_" + ID).val();
+                var rating = $("#ratingedit_" + ID).val();
+                var year = $("#yearedit_" + ID).val();
+
+                if (name.length > 0) {
+
+                    $.ajax({
+                        type: "post",
+                        url: "oops.php",
+                        data: {
+                            'id': ID,
+                            'name': name,
+                            'year': year,
+                            'rating': rating
+                        },
+                        success: function(data) {
+                            alert(data)
+
+                        },
+                        error: function() {
+                            alert("Error");
+                        }
+                    });
+                } else {
+                    alert('Enter something.');
+                }
+
+            });
+
+            // Edit input box click action
+            $(".editbox").mouseup(function() {
+                return false
+            });
+
+            // Outside click action
+            $(document).mouseup(function() {
+                $(".editorbox").hide();
+                $(".text").show();
+            });
+
+        });
+
+
+
+        //Delete Option
         $(document).ready(function() {
             $('.deleterecord').click(function(e) {
                 e.preventDefault();
@@ -86,11 +148,6 @@
                 });
             });
         });
-
-
-
-
-        
     </script>
     <style type="text/css">
         .wrapper {
@@ -163,7 +220,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                         <a href="create.php" class="btn btn-success pull-right">Add Movie</a>
                     </div>
                     <?php
@@ -189,13 +246,33 @@
                             echo "</thead>";
                             echo "<tbody>";
                             while ($row = $result->fetch_array()) {
-                                echo "<tr>";
-                                //echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . $row['name'] . "</td>";
                                 $name = $row['name'];
                                 $year = $row['year'];
                                 $rating = $row['rating'];
                                 $id = $row['id'];
+                                $nameid = "name_$id";
+                                $nameedit = "nameedit_$id";
+                                $yearid = "year_$id";
+                                $yearedit = "yearedit_$id";
+                                $ratingid = "rating_$id";
+                                $ratingedit = "ratingedit_$id";
+                                echo "<tr class='edit_tr' id='$id'>";
+
+
+
+
+                                //echo "<td>" . $row['id'] . "</td>";
+                                //echo "<td class='edit_td'>" . $row['name'] . "</td>";
+
+                                echo "<td class='edit_td'>";
+                                echo "<span id='$nameid' class='text'>";
+                                echo $name;
+                                echo "</span>";
+                                echo "<input type='text' value='$name' class='editorbox' id='$nameedit'>";
+                                echo "</td>";
+
+
+
 
 
 
@@ -220,7 +297,15 @@
                                 echo "</td>";
 
 
-                                echo "<td>" . $row['year'] . "</td>";
+                                // echo "<td class='edit_td'>" . $row['year'] . "</td>";
+
+                                echo "<td class='edit_td'>";
+                                echo "<span id='$yearid' class='text'>";
+                                echo $year;
+                                echo "</span>";
+                                echo "<input type='number' value='$year' min='1600' max='2019' class='editorbox' id='$yearedit'>";
+                                echo "</td>";
+
 
                                 //something gonna happen here2
                                 echo "<td>";
@@ -242,7 +327,17 @@
                                 }
 
                                 echo "</td>";
-                                echo "<td>" . $row['rating'] . "</td>";
+
+
+
+                                echo "<td class='edit_td'>";
+                                echo "<span id='$ratingid' class='text'>";
+                                echo $rating;
+                                echo "</span>";
+                                echo "<input type='number' value='$rating' min='1' max='10' class='editorbox' id='$ratingedit'>";
+                                echo "</td>";
+
+
 
                                 echo "<td><img src=\"" . $row['thumbnail'] . "\" width=\"100px\"/></td>";
                                 echo "<td>";
