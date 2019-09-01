@@ -18,9 +18,12 @@ $yearofrelease = $mysqli->real_escape_string($_REQUEST['yearofrelease']);
 $id=$_POST['id'];
 // Attempt insert query execution
 
+$delete="DELETE FROM actorgenre WHERE movieid='$id'";
+$result= mysqli_query($mysqli, $delete) or die("database error:". mysqli_error($mysqli));
 foreach ($_POST['actor'] as $selectedactor) {
+    //$selector='actor';
     
-    $sql = "UPDATE actorsforamovie SET movie='$name', year='$yearofrelease', rating='$rating',actor='$selectedactor' WHERE id='$id'";
+    $sql = "INSERT INTO actorgenre (movieid, thevalue, selector ) VALUES ('$id', '$selectedactor', 'actor' )";
 if($mysqli->query($sql) === true){
     echo "Records inserted successfully.";
 } else{
@@ -29,15 +32,37 @@ if($mysqli->query($sql) === true){
 }
 foreach ($_POST['genre'] as $selectedgenre) {
     
-    
-    $sql = "UPDATE genresforamovie SET movie='$name', year='$yearofrelease', rating='$rating', genre='$selectedgenre' WHERE id='$id'";
+    $sql = "INSERT INTO actorgenre(movieid, thevalue, selector ) VALUES ('$id', '$selectedgenre', 'genre')";
 if($mysqli->query($sql) === true){
-    
     echo "Records inserted successfully.";
 } else{
     echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
 }
 }
+
+// foreach ($_POST['actor'] as $selectedactor) {
+//     //echo $selectedactor;
+    
+//     $sql = "UPDATE actorgenre SET thevalue='$selectedactor' WHERE movieid='$id' AND selector='actor'";
+
+// if($mysqli->query($sql) === true){
+//     echo "Records inserted successfully.";
+// } else{
+//     echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
+// }
+// //$mysqli->query($sql);
+// }
+// foreach ($_POST['genre'] as $selectedgenre) {
+    
+    
+//     $sql = "UPDATE actorgenre SET thevalue='$selectedgenre' WHERE movieid='$id' AND selector='genre'";
+// if($mysqli->query($sql) === true){
+    
+//     echo "Records inserted successfully.";
+// } else{
+//     echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
+// }
+// }
 
 $sql = "UPDATE movies SET name='$name', rating='$rating', year='$yearofrelease'  WHERE id='$id'";
 if ($mysqli->query($sql) === true) {

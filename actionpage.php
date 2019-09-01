@@ -18,8 +18,9 @@ $thumbnail= $_POST['thumbnail'];
 $id= $_POST['id'];
 // Attempt insert query execution
 foreach ($_POST['actor'] as $selectedactor) {
+    //$selector='actor';
     
-    $sql = "INSERT INTO actorsforamovie (id, movie, actor, year, rating ) VALUES ('$id', '$name', '$selectedactor', '$yearofrelease', '$rating')";
+    $sql = "INSERT INTO actorgenre (movieid, thevalue, selector ) VALUES ('$id', '$selectedactor', 'actor' )";
 if($mysqli->query($sql) === true){
     echo "Records inserted successfully.";
 } else{
@@ -28,7 +29,7 @@ if($mysqli->query($sql) === true){
 }
 foreach ($_POST['genre'] as $selectedgenre) {
     
-    $sql = "INSERT INTO genresforamovie (id, movie, genre, year, rating ) VALUES ('$id','$name', '$selectedgenre', '$yearofrelease', '$rating')";
+    $sql = "INSERT INTO actorgenre(movieid, thevalue, selector ) VALUES ('$id', '$selectedgenre', 'genre')";
 if($mysqli->query($sql) === true){
     echo "Records inserted successfully.";
 } else{

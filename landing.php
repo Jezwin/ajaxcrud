@@ -24,12 +24,23 @@
                 $("#yearedit_" + ID).show();
                 $("#rating_" + ID).hide();
                 $("#ratingedit_" + ID).show();
+                $("#actor_" + ID).hide();
+                $("#actoredit_" + ID).show();
+                $("#genre_" + ID).hide();
+                $("#genreedit_" + ID).show();
 
             }).change(function() {
                 var ID = $(this).attr('id');
                 var name = $("#nameedit_" + ID).val();
                 var rating = $("#ratingedit_" + ID).val();
                 var year = $("#yearedit_" + ID).val();
+                var actor = $("#actoredit_" + ID).val();
+                var genre = $("#genreedit_" + ID).val();
+                //  alert(year);
+                //  alert(rating);
+                // alert(actor);
+                // alert(genre);
+
 
                 if (name.length > 0) {
 
@@ -40,14 +51,23 @@
                             'id': ID,
                             'name': name,
                             'year': year,
-                            'rating': rating
+                            'rating': rating,
+                            'genre': genre,
+                            'actor': actor
                         },
                         success: function(data) {
-                            alert(data)
+                            alert(data);
+                            //$("#refresh").html();
+                            $("#refresh").ajax.reload();
+                           // $("#refresh").load(window.location + " #refresh");
+                           
+
+
 
                         },
                         error: function() {
                             alert("Error");
+
                         }
                     });
                 } else {
@@ -57,9 +77,9 @@
             });
 
             // Edit input box click action
-            $(".editbox").mouseup(function() {
-                return false
-            });
+            // $(".editorbox").mouseup(function() {
+            //     return false
+            // });
 
             // Outside click action
             $(document).mouseup(function() {
@@ -227,12 +247,13 @@
                     // Include config file
                     require_once "config.php";
 
+
                     // Attempt select query execution
 
                     $sql = "SELECT * FROM movies";
                     if ($result = $mysqli->query($sql)) {
                         if ($result->num_rows > 0) {
-                            echo "<table class='table table-bordered table-striped'>";
+                            echo "<table id='refresh' class='table table-bordered table-striped'>";
                             echo "<thead>";
                             echo "<tr>";
                             //echo "<th>#</th>";
@@ -246,6 +267,10 @@
                             echo "</thead>";
                             echo "<tbody>";
                             while ($row = $result->fetch_array()) {
+
+                                $actordrop = $mysqli->query("SELECT actor FROM actortable");
+                                $genredrop = $mysqli->query("SELECT genre FROM genretable");
+
                                 $name = $row['name'];
                                 $year = $row['year'];
                                 $rating = $row['rating'];
@@ -256,6 +281,10 @@
                                 $yearedit = "yearedit_$id";
                                 $ratingid = "rating_$id";
                                 $ratingedit = "ratingedit_$id";
+                                $actorid = "actor_$id";
+                                $actoredit = "actoredit_$id";
+                                $genreid = "genre_$id";
+                                $genreedit = "genreedit_$id";
                                 echo "<tr class='edit_tr' id='$id'>";
 
 
@@ -277,15 +306,20 @@
 
 
                                 //something gonna happen here
-                                echo "<td>";
-                                $sql1 = "SELECT actor FROM actorsforamovie WHERE movie= '$name' AND year='$year' AND rating='$rating' AND id='$id' ";
+
+
+
+                                echo "<td class='edit_td'>";
+                                $sql1 = "SELECT thevalue FROM actorgenre WHERE movieid= '$id' AND selector='actor'";
+
+                                echo "<span id='$actorid' class='text'>";
 
                                 if ($result1 = $mysqli->query($sql1)) {
 
 
                                     if ($result1->num_rows > 0) {
                                         while ($row1 = $result1->fetch_array()) {
-                                            echo $row1['actor'];
+                                            echo $row1['thevalue'];
                                             echo "<br>";
                                         }
 
@@ -293,8 +327,31 @@
                                         $result1->free();
                                     }
                                 }
+                                echo "</span>";
+
+                                //echo "<input type='number' value='$year' min='1600' max='2019' class='editorbox' id='$yearedit'>";
+
+                                echo "<select name='actor[]' class='editorbox' id='$actoredit' multiple required>";
+
+                                while ($rows = $actordrop->fetch_assoc()) {
+
+                                    $actor = $rows['actor'];
+                                    echo "<option value='$actor'>$actor</option>";
+                                }
+
+
+
+                                echo "</select>";
 
                                 echo "</td>";
+
+
+
+
+
+
+
+
 
 
                                 // echo "<td class='edit_td'>" . $row['year'] . "</td>";
@@ -308,16 +365,17 @@
 
 
                                 //something gonna happen here2
-                                echo "<td>";
-                                $sql2 = "SELECT genre FROM genresforamovie WHERE movie= '$name' AND year='$year' AND rating='$rating' AND id='$id' ";
+                                echo "<td class='edit_td'>";
+                                $sql2 = "SELECT thevalue FROM actorgenre WHERE movieid= '$id' AND selector='genre'";
                                 //echo $sql2;
+                                echo "<span id='$genreid' class='text'>";
 
                                 if ($result2 = $mysqli->query($sql2)) {
 
 
                                     if ($result2->num_rows > 0) {
                                         while ($row2 = $result2->fetch_array()) {
-                                            echo $row2['genre'];
+                                            echo $row2['thevalue'];
                                             echo "<br>";
                                         }
 
@@ -325,6 +383,16 @@
                                         $result2->free();
                                     }
                                 }
+                                echo "</span>";
+
+                                echo "<select name='genre[]' class='editorbox' id='$genreedit' multiple required>";
+
+                                while ($rows = $genredrop->fetch_assoc()) {
+                                    $genre = $rows['genre'];
+                                    echo "<option value='$genre'>$genre</option>";
+                                }
+
+                                echo "</select>";
 
                                 echo "</td>";
 
