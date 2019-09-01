@@ -56,11 +56,11 @@
                             'actor': actor
                         },
                         success: function(data) {
-                            alert(data);
+                            //alert(data);
                             //$("#refresh").html();
                             $("#refresh").ajax.reload();
-                           // $("#refresh").load(window.location + " #refresh");
-                           
+                            window.location.reload();
+                            //$("#table_id").load(window.location + " #table_id");
 
 
 
