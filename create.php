@@ -2,8 +2,8 @@
 // Include config file
 require_once "config.php";
 //$id = $_GET['id'];
-$actordrop = $mysqli->query("SELECT actor FROM actortable");
-$genredrop = $mysqli->query("SELECT genre FROM genretable");
+$actordrop = $mysqli->query("SELECT name FROM ag WHERE category='actor'");
+$genredrop = $mysqli->query("SELECT name FROM ag WHERE category='genre'");
 
 ?>
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ $genredrop = $mysqli->query("SELECT genre FROM genretable");
                             <select name="actor[]" multiple required>
                                 <?php
                                 while ($rows = $actordrop->fetch_assoc()) {
-                                    $actor = $rows['actor'];
+                                    $actor = $rows['name'];
                                     echo "<option value='$actor'>$actor</option>";
                                 }
                                 ?>
@@ -62,7 +62,7 @@ $genredrop = $mysqli->query("SELECT genre FROM genretable");
                             <select name="genre[]" multiple required>
                                 <?php
                                 while ($rows = $genredrop->fetch_assoc()) {
-                                    $genre = $rows['genre'];
+                                    $genre = $rows['name'];
                                     echo "<option value='$genre'>$genre</option>";
                                 }
                                 ?>

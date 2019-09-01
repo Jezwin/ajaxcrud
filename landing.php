@@ -91,6 +91,8 @@
 
 
 
+
+
         //Delete Option
         $(document).ready(function() {
             $('.deleterecord').click(function(e) {
@@ -268,8 +270,8 @@
                             echo "<tbody>";
                             while ($row = $result->fetch_array()) {
 
-                                $actordrop = $mysqli->query("SELECT actor FROM actortable");
-                                $genredrop = $mysqli->query("SELECT genre FROM genretable");
+                                $actordrop = $mysqli->query("SELECT name FROM ag WHERE category='actor'");
+                                $genredrop = $mysqli->query("SELECT name FROM ag WHERE category='genre'");
 
                                 $name = $row['name'];
                                 $year = $row['year'];
@@ -335,7 +337,7 @@
 
                                 while ($rows = $actordrop->fetch_assoc()) {
 
-                                    $actor = $rows['actor'];
+                                    $actor = $rows['name'];
                                     echo "<option value='$actor'>$actor</option>";
                                 }
 
@@ -388,7 +390,7 @@
                                 echo "<select name='genre[]' class='editorbox' id='$genreedit' multiple required>";
 
                                 while ($rows = $genredrop->fetch_assoc()) {
-                                    $genre = $rows['genre'];
+                                    $genre = $rows['name'];
                                     echo "<option value='$genre'>$genre</option>";
                                 }
 

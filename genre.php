@@ -6,7 +6,7 @@ $genre=$_POST['name'];
 
 
 //Insert query
-$sql = "INSERT INTO genretable (genre) VALUES ('$genre')";
+$sql = "INSERT INTO ag (name, category) VALUES ('$genre', 'genre')";
 if($mysqli->query($sql) === true){
     echo "Add More Genre";
 } else{
