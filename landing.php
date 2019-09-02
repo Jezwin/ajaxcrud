@@ -6,21 +6,22 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script> -->
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/bootboxmin.js"></script>
+    <script src="/addactorgenre.js"></script>
     <script>
-        //Data Tables
-        // $(document).ready(function() {
-        //     $('#refresh').DataTable();
-        // });
 
 
-        //Edit
+        $(document).ready(function() {
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#refresh tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
 
 
         $(document).ready(function() {
@@ -30,47 +31,6 @@
         var home = () => {
             $("#hereitgoes").load("tableload.php");
         }
-
-
-
-       
-
-        $(document).ready(function() {
-            $("button#submit").click(function() {
-                $.ajax({
-                    type: "POST",
-                    url: "actor.php",
-                    data: $('form.feedback').serialize(),
-                    success: function(message) {
-
-                        $("#feedback").html(message)
-                        $("#feedback-modal").modal('hide');
-                    },
-                    error: function() {
-                        alert("Error");
-                    }
-                });
-            });
-        });
-
-
-        $(document).ready(function() {
-            $("button#submit1").click(function() {
-                $.ajax({
-                    type: "POST",
-                    url: "genre.php",
-                    data: $('form.feedback1').serialize(),
-                    success: function(message) {
-
-                        $("#feedback1").html(message)
-                        $("#feedback-modal1").modal('hide');
-                    },
-                    error: function() {
-                        alert("Error");
-                    }
-                });
-            });
-        });
     </script>
     <style type="text/css">
         .wrapper {
@@ -94,7 +54,6 @@
 </head>
 
 <body>
-
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -143,6 +102,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search">
 
                         <a href="create.php" class="btn btn-success pull-right">Add Movie</a>
                     </div>

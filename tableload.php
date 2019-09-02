@@ -37,7 +37,7 @@
 
                     $.ajax({
                         type: "post",
-                        url: "oops.php",
+                        url: "ajaxupdate.php",
                         data: {
                             'id': ID,
                             'name': name,
@@ -116,6 +116,7 @@
                                     })
                                     .done(function(response) {
                                         //bootbox.alert(response);
+                                        home();
                                         parent.fadeOut('slow');
                                     })
                                     .fail(function() {
@@ -295,7 +296,7 @@ if ($result = $mysqli->query($sql)) {
             echo "<td><img src=\"" . $row['thumbnail'] . "\" width=\"100px\"/></td>";
             echo "<td>";
 
-            echo "<a href='update.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+            echo "<a id='edit_tr' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
             //echo "<a href='#feedback-modal2' id='feedback2' data-toggle= 'modal' title='Delete Record' ><span class='glyphicon glyphicon-trash'></span></a>";
             $id = $row['id'];
             echo "<a id='$id' href='#' title='Delete Record' class='deleterecord'><span class='glyphicon glyphicon-trash'></span></a>";
