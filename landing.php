@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search">
+                        <input type="text" id="myInput" placeholder="Search">
 
                         <a href="create.php" class="btn btn-success pull-right">Add Movie</a>
                     </div>
