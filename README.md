@@ -2,9 +2,4 @@
 
 Start off with landing.php. The index.php is just a bogus file.
 
-
-AJAX is used for Add Actor, Add Genre and Delete Records option. *config.php is the script that connects with the database.* 
-
-If the pen icon under action(in UI) is used to update the record it would do in the classic way. If AJAX has to be fired just go inline, tap on any record you wanna edit and click outside once done.
-
-Updating the actor, genre and thumbnail is currently not supported on update using AJAX. You might also find the screen is not updated, even after the database is populated with new values, unless refreshed.
+Updating the records, if no value is selected for actor and genre it would update null and displays blank. Updating an actor or genre should be followed or be done after any change in other columns, as updating actor/genre column alone has been set not to act. It's the expected behaviour.
